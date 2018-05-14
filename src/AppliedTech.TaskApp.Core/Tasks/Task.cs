@@ -1,6 +1,7 @@
 ﻿using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
 using Abp.Timing;
+using AppliedTech.TaskApp.People;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,6 +17,10 @@ namespace AppliedTech.TaskApp.Tasks
         public const int MaxTitleLength = 256;
         public const int MaxDescriptionLength = 64 * 1024; //64KB
 
+        [ForeignKey(nameof(AssignedPersonId))]
+        public Person AssignedPerson { get; set; }
+        public Guid? AssignedPersonId { get; set; }
+
         [Required]
         [MaxLength(MaxTitleLength)]
         public string Title { get; set; }
@@ -27,7 +32,7 @@ namespace AppliedTech.TaskApp.Tasks
 
         public TaskState State { get; set; }
 
-        
+
 
         public Task()
         {
@@ -35,11 +40,12 @@ namespace AppliedTech.TaskApp.Tasks
             State = TaskState.Open;
         }
 
-        public Task(string title, string description = null)
+        public Task(string title, string description = null, Guid? assignedPersonId = null)
             : this()
         {
             Title = title;
-            Description = description;          
+            Description = description;
+            AssignedPersonId = assignedPersonId;
         }
 
     }

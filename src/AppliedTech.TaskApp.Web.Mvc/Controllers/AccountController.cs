@@ -147,7 +147,7 @@ namespace AppliedTech.TaskApp.Web.Controllers
         {
             if (!AbpSession.TenantId.HasValue)
             {
-                return false; // No registration enabled for host users!
+                return true; // No registration enabled for host users!
             }
 
             return true;

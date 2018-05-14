@@ -6,19 +6,33 @@
     ViewBag.ActiveMenu = PageNames.TaskList; //Matches with the menu name in SimpleTaskAppNavigationProvider to highlight the menu item
 }
 
+
+
+@section scripts
+    {
+    <environment names="Development">
+        <script src="~/view-resources/Views/Tasks/index.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Tasks/index.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+
 <h2>
     @L("TaskList")
     <span><a class="btn btn-primary btn-sm" asp-action="Create">@L("AddNew")</a></span>
-    @*<span class="pull-right">
+    <span class="pull-right">
         @Html.DropDownListFor(
-                     model => model.SelectedTaskState,
-                     Model.GetTasksStateSelectListItems(LocalizationManager),
-                     new
-                     {
-                         @class = "form-control",
-                         id = "TaskStateCombobox"
-                     })
-    </span>*@
+                                                        model => model.SelectedTaskState,
+                                                        Model.GetTasksStateSelectListItems(LocalizationManager),
+                                                        new
+                                                        {
+                                                            @class = "form-control",
+                                                            id = "TaskStateCombobox"
+                                                        })
+    </span>
 </h2>
 
 <div class="row">
@@ -30,7 +44,7 @@
                     <span class="pull-right label label-lg @Model.GetTaskLabel(task)">@L($"TaskState_{task.State}")</span>
                     <h4 class="list-group-item-heading">@task.Title</h4>
                     <div class="list-group-item-text">
-                        @task.CreationTime.ToString("yyyy-MM-dd HH:mm:ss"))
+                        @task.CreationTime.ToString("yyyy-MM-dd HH:mm:ss")| @(task.AssignedPersonName ?? L("Unassigned"))
                     </div>
                 </li>
             }

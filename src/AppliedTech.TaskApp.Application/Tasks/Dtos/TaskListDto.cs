@@ -18,5 +18,9 @@ namespace AppliedTech.TaskApp.Tasks.Dtos
         public DateTime CreationTime { get; set; }
 
         public TaskState State { get; set; }
+
+        public Guid? AssignedPersonId { get; set; }
+
+        public string AssignedPersonName { get; set; }
     }
 }

@@ -14,6 +14,7 @@ using Abp.Extensions;
 using AppliedTech.TaskApp.Authentication.JwtBearer;
 using AppliedTech.TaskApp.Configuration;
 using AppliedTech.TaskApp.Identity;
+using IdentityServer4.AccessTokenValidation;
 
 #if FEATURE_SIGNALR
 using Microsoft.AspNet.SignalR;
@@ -40,12 +41,38 @@ namespace AppliedTech.TaskApp.Web.Host.Startup
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            // MVC
+            //MVC
             services.AddMvc(
                 options => options.Filters.Add(new CorsAuthorizationFilterFactory(_defaultCorsPolicyName))
             );
 
+
+
             IdentityRegistrar.Register(services);
+
+            //...IDM4
+            services.AddMvcCore()
+           .AddAuthorization()
+           .AddJsonFormatters();
+
+            //services.AddAuthentication("Bearer")
+            //.AddIdentityServerAuthentication(options =>
+            //{
+            //    options.Authority = "http://localhost:5000";
+            //    options.RequireHttpsMetadata = false;
+            //    options.ApiName = "api1";
+
+            //});
+
+            //...
+
+            services.AddAuthentication().AddIdentityServerAuthentication("IdentityBearer", options =>
+            {
+                options.Authority = "http://localhost:5000";
+                options.RequireHttpsMetadata = false;
+            });
+
+
             AuthConfigurer.Configure(services, _appConfiguration);
 
 #if FEATURE_SIGNALR_ASPNETCORE
@@ -98,6 +125,7 @@ namespace AppliedTech.TaskApp.Web.Host.Startup
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+
             app.UseAbp(options => { options.UseAbpRequestLocalization = false; }); // Initializes ABP framework.
 
             app.UseCors(_defaultCorsPolicyName); // Enable CORS!
@@ -105,7 +133,7 @@ namespace AppliedTech.TaskApp.Web.Host.Startup
             app.UseStaticFiles();
 
             app.UseAuthentication();
-
+            // app.UseJwtTokenMiddleware();
             app.UseAbpRequestLocalization();
 
 #if FEATURE_SIGNALR

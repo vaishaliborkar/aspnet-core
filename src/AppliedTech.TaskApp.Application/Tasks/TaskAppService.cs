@@ -1,4 +1,5 @@
 ﻿using Abp.Application.Services.Dto;
+using Abp.Authorization;
 using Abp.Domain.Repositories;
 using Abp.Linq.Extensions;
 using AppliedTech.TaskApp.Tasks.Dtos;
@@ -20,10 +21,12 @@ namespace AppliedTech.TaskApp.Tasks
             _taskRepository = taskRepository;
         }
 
+        [AbpAuthorize]
         public async Task<ListResultDto<TaskListDto>> GetAll(GetAllTasksInput input)
         {
             var tasks = await _taskRepository
                 .GetAll()
+                .Include(t => t.AssignedPerson)
                 .WhereIf(input.State.HasValue, t => t.State == input.State.Value)
                 .OrderByDescending(t => t.CreationTime)
                 .ToListAsync();
