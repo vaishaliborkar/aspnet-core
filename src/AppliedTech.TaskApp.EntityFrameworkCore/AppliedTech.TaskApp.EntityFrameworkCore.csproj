@@ -8,6 +8,12 @@
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Migrations\20180514110813_added_Reminder.cs" />
+    <Compile Remove="Migrations\20180514111408_added_Reminder.cs" />
+    <Compile Remove="Migrations\20180515025743_Added_Reminders.cs" />
+    <Compile Remove="Migrations\20180515035333_Added_Reminders.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.0.1" />

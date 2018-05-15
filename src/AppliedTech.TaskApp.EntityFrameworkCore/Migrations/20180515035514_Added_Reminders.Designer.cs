@@ -17,9 +17,10 @@ using System;
 namespace AppliedTech.TaskApp.Migrations
 {
     [DbContext(typeof(TaskAppDbContext))]
-    partial class TaskAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180515035514_Added_Reminders")]
+    partial class Added_Reminders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1092,37 +1093,6 @@ namespace AppliedTech.TaskApp.Migrations
                     b.ToTable("AppReminders");
                 });
 
-            modelBuilder.Entity("AppliedTech.TaskApp.Reminders.Seen", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<long?>("CreatorUserId");
-
-                    b.Property<long?>("DeleterUserId");
-
-                    b.Property<DateTime?>("DeletionTime");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime");
-
-                    b.Property<long?>("LastModifierUserId");
-
-                    b.Property<string>("Remark")
-                        .HasMaxLength(256);
-
-                    b.Property<long?>("ReminderId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ReminderId");
-
-                    b.ToTable("AppSeen");
-                });
-
             modelBuilder.Entity("AppliedTech.TaskApp.Tasks.Task", b =>
                 {
                     b.Property<int>("Id")
@@ -1316,13 +1286,6 @@ namespace AppliedTech.TaskApp.Migrations
                     b.HasOne("AppliedTech.TaskApp.Authorization.Users.User", "LastModifierUser")
                         .WithMany()
                         .HasForeignKey("LastModifierUserId");
-                });
-
-            modelBuilder.Entity("AppliedTech.TaskApp.Reminders.Seen", b =>
-                {
-                    b.HasOne("AppliedTech.TaskApp.Reminders.Reminder", "AssignedReminder")
-                        .WithMany()
-                        .HasForeignKey("ReminderId");
                 });
 
             modelBuilder.Entity("AppliedTech.TaskApp.Tasks.Task", b =>

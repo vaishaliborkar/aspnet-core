@@ -17,9 +17,10 @@ using System;
 namespace AppliedTech.TaskApp.Migrations
 {
     [DbContext(typeof(TaskAppDbContext))]
-    partial class TaskAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180515035609_Added_Seen")]
+    partial class Added_Seen
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

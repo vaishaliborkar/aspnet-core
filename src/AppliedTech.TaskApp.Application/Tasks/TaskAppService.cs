@@ -21,7 +21,7 @@ namespace AppliedTech.TaskApp.Tasks
             _taskRepository = taskRepository;
         }
 
-        [AbpAuthorize]
+
         public async Task<ListResultDto<TaskListDto>> GetAll(GetAllTasksInput input)
         {
             var tasks = await _taskRepository
